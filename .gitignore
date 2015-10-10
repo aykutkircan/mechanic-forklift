@@ -12,6 +12,7 @@ lib-cov
 pids
 results
 node_modules
+config
 
 npm-debug.log
 test/credentials.json
