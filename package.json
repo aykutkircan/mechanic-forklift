@@ -1,6 +1,6 @@
 {
   "name": "mechanic-forklift",
-  "version": "0.9.1",
+  "version": "0.9.2",
   "description": "Lift & Move everything in S3",
   "main": "index.js",
   "scripts": {
