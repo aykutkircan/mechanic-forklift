@@ -7,10 +7,8 @@
  */
 
 var chai = require("chai");
-chai.use(require("chai-as-promised"));
 var expect = chai.expect;
 
-var Promise = require("bluebird");
 var fs = require("fs");
 var Path = require("path");
 var request = require("request");
@@ -21,6 +19,7 @@ var Forklift = require("../lib/forklift");
 var secret = require("../config/secret");
 
 describe("Forklift", function () {
+
     var imageDirectory = Path.join(process.cwd(), "test/images");
     var options;
     var filePath = Path.join(imageDirectory, "forklift_test.jpg");
@@ -52,11 +51,19 @@ describe("Forklift", function () {
             upload: null
         });
 
-        return expect(Forklift.liftFile(filePath, s3Path, options)).to.be.rejected;
+        Forklift.uploadFile(filePath, s3Path, options, (error, remoteUrl) => {
+
+            expect(error).to.not.exist;
+            expect(remoteUrl).to.exist;
+            done();
+        });
     });
 
     it("should remove image after upload as default", function (done) {
-        Forklift.liftImage(filePath, s3Path, options).then(function () {
+
+        Forklift.uploadFile(filePath, s3Path, options, (error, remoteUrl) => {
+
+            expect(error).to.not.exist;
             fs.exists(filePath, function (exists) {
                 expect(exists).to.be.false;
                 done();
